@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,6 +34,15 @@ public class User extends BaseEntity {
     private Set<Role> roles;
     private String otp;
     private LocalDateTime otpGeneratedTime;
+
+    @OneToMany(mappedBy = "user")
+    private List<Travel> travels;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Like> likes;
 
 
 }

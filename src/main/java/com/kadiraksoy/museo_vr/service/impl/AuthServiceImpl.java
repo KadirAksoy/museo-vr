@@ -103,7 +103,7 @@ public class AuthServiceImpl implements AuthService {
         }
         String otp = otpUtil.generateOtp();
         try {
-            emailUtil.sendOtpEmail(email, otp);
+            //emailUtil.sendOtpEmail(email, otp);
         } catch (Exception e) {
             throw new EmailNotSendException(email);
         }
