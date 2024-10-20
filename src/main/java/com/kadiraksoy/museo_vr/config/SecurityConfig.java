@@ -51,10 +51,13 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register",
-                                "/api/auth/login",
-                                "/api/auth/verify-account",
-                                "/api/auth/regenerate-otp").permitAll()
+                                .anyRequest().permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/auth/register",
+//                                "/api/auth/login",
+//                                "/api/auth/verify-account",
+//                                "/api/auth/regenerate-otp").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/travel/create").hasRole("USER")
+
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

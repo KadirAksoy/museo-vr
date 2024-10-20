@@ -1,10 +1,7 @@
 package com.kadiraksoy.museo_vr.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Travel extends BaseEntity {
 
     private String title;
@@ -21,6 +19,10 @@ public class Travel extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "content_image_id", referencedColumnName = "id")
+    private TravelImage contentImage;
 
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL)
     private List<TravelImage> images;
