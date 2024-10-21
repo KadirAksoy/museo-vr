@@ -93,6 +93,7 @@ public class TravelController {
         travelService.deleteTravelImagesFromTravel(travelId, imageId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @PutMapping("/{travelId}/update-image/{imageId}")
     public ResponseEntity<TravelResponse> updateImageToTravel(
             @PathVariable Long travelId,

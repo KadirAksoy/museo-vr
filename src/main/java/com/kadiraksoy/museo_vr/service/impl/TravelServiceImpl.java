@@ -5,6 +5,7 @@ import com.kadiraksoy.museo_vr.dto.request.TravelRequest;
 import com.kadiraksoy.museo_vr.dto.response.TravelDetailsResponse;
 import com.kadiraksoy.museo_vr.dto.response.TravelImageResponse;
 import com.kadiraksoy.museo_vr.dto.response.TravelResponse;
+import com.kadiraksoy.museo_vr.exception.AccesdeniedException;
 import com.kadiraksoy.museo_vr.exception.TravelNotFoundException;
 import com.kadiraksoy.museo_vr.exception.UserNotFoundException;
 import com.kadiraksoy.museo_vr.mapper.TravelMapper;
@@ -54,7 +55,6 @@ public class TravelServiceImpl implements TravelService {
         travelImage.setTravel(travel);
 
         travelRepository.save(travel);
-
         return createTravelResponse(travel, travelImage);
 
     }
@@ -66,9 +66,8 @@ public class TravelServiceImpl implements TravelService {
         User user = getUserBySecurityContext();
         Travel existingTravel = travelRepository.findById(id).orElseThrow(TravelNotFoundException::new);
         if(!existingTravel.getUser().getId().equals(user.getId())){
-            throw new UserNotFoundException("hata"); // AccesdeniedException yazılacak
+            throw new AccesdeniedException();
         }
-
         TravelImage travelImage = travelImageService.updateTravelImage(existingTravel.getContentImage().getId(),
                 file, travelRequest.getTravelImageRequest().getContent());
 
@@ -78,7 +77,6 @@ public class TravelServiceImpl implements TravelService {
         existingTravel.setContentImage(travelImage);
 
         travelRepository.save(existingTravel);
-
         return createTravelResponse(existingTravel, travelImage);
     }
 
@@ -111,7 +109,6 @@ public class TravelServiceImpl implements TravelService {
         TravelDetailsResponse travelDetailsResponse = new TravelDetailsResponse();
         travelDetailsResponse.setTravelResponse(travelResponse);
         travelDetailsResponse.setTravelImageResponses(travelImageResponses);
-
         return travelDetailsResponse;
     }
 
@@ -122,7 +119,6 @@ public class TravelServiceImpl implements TravelService {
         if (travels.isEmpty()) {
             throw new TravelNotFoundException();
         }
-
         return travels.stream()
                 .map(travel -> createTravelResponse(travel, travel.getContentImage())).toList();
     }
@@ -140,7 +136,7 @@ public class TravelServiceImpl implements TravelService {
         User user = getUserBySecurityContext();
         Travel travel = travelRepository.findById(travelId).orElseThrow(TravelNotFoundException::new);
         if(!travel.getUser().getId().equals(user.getId())){
-            throw new UserNotFoundException("hata"); // AccesdeniedException yazılacak
+            throw new AccesdeniedException();
         }
 
         TravelImage travelImage = travelImageService.saveTravelImage(content, image);
@@ -157,27 +153,25 @@ public class TravelServiceImpl implements TravelService {
 
         Travel travel = travelRepository.findById(id).orElseThrow(TravelNotFoundException::new);
         if(!travel.getUser().getId().equals(user.getId())){
-            throw new UserNotFoundException("hata"); // AccesdeniedException yazılacak
+            throw new AccesdeniedException();
         }
         travelRepository.deleteById(id);
     }
 
-
-    // Tekrar bakılacak.
     @Override
     @Transactional
     public void deleteTravelImagesFromTravel(Long travelId, Long imageId) {
         User user = getUserBySecurityContext();
         Travel travel = travelRepository.findById(travelId).orElseThrow(TravelNotFoundException::new);
         if (!travel.getUser().getId().equals(user.getId())) {
-            throw new UserNotFoundException("hata"); // AccesdeniedException yazılacak
+            throw new AccesdeniedException();
         }
         TravelImage travelImage = travel.getImages().stream()
                 .filter(image -> image.getId().equals(imageId))
                 .findFirst()
                 .orElseThrow(TravelImageNotFoundException::new);
 
-        travel.getImages().remove(travelImage);
+        travelImage.setTravel(null);
         travelRepository.save(travel);
     }
 
@@ -190,7 +184,7 @@ public class TravelServiceImpl implements TravelService {
         User user = getUserBySecurityContext();
         Travel travel = travelRepository.findById(travelId).orElseThrow(TravelNotFoundException::new);
         if (!travel.getUser().getId().equals(user.getId())) {
-            throw new UserNotFoundException("hata"); // AccesdeniedException yazılacak
+            throw new AccesdeniedException();
         }
         TravelImage travelImage = travel.getImages().stream()
                 .filter(image1 -> image1.getId().equals(imageId))
