@@ -38,7 +38,6 @@ public class TravelServiceImpl implements TravelService {
     private final TravelRepository travelRepository;
     private final TravelMapper travelMapper;
     private final TravelImageService travelImageService;
-    private final TravelImageRepository travelImageRepository;
 
     @Override
     @Transactional
