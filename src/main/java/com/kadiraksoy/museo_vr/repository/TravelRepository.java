@@ -8,6 +8,6 @@ import java.util.List;
 public interface TravelRepository extends JpaRepository<Travel, Long> {
 
     List<Travel> findByUserId(Long userId);
-    List<Travel> findAllByOrderByLikesDesc();
+    List<Travel> findTop10ByOrderByLikesDesc();
 
 }

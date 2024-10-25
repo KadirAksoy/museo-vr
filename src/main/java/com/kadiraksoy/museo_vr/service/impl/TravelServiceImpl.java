@@ -125,7 +125,7 @@ public class TravelServiceImpl implements TravelService {
     @Override
     @Transactional
     public List<TravelResponse> getTravelsSortedByLikes() {
-        List<Travel> travels = travelRepository.findAllByOrderByLikesDesc();
+        List<Travel> travels = travelRepository.findTop10ByOrderByLikesDesc();
         return travels.stream()
                 .map(travel -> createTravelResponse(travel, travel.getContentImage())).toList();
     }
