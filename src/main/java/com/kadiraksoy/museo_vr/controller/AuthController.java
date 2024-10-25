@@ -2,6 +2,7 @@ package com.kadiraksoy.museo_vr.controller;
 
 import com.kadiraksoy.museo_vr.dto.request.LoginRequest;
 import com.kadiraksoy.museo_vr.dto.request.RegisterRequest;
+import com.kadiraksoy.museo_vr.dto.request.UpdateAuthRequest;
 import com.kadiraksoy.museo_vr.dto.response.AuthenticationResponse;
 import com.kadiraksoy.museo_vr.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,12 @@ public class AuthController {
     @PostMapping("/regenerate-otp")
     public ResponseEntity<String> regenerateOtp(@RequestParam("email") String email) {
         String message = authService.regenerateOtp(email);
+        return ResponseEntity.ok(message);
+    }
+
+    @PostMapping("/update-auth")
+    public ResponseEntity<String> updateAuth(@RequestBody UpdateAuthRequest updateAuthRequest) {
+        String message = authService.updateAuth(updateAuthRequest);
         return ResponseEntity.ok(message);
     }
 }

@@ -2,6 +2,7 @@ package com.kadiraksoy.museo_vr.service.impl;
 
 import com.kadiraksoy.museo_vr.dto.request.LoginRequest;
 import com.kadiraksoy.museo_vr.dto.request.RegisterRequest;
+import com.kadiraksoy.museo_vr.dto.request.UpdateAuthRequest;
 import com.kadiraksoy.museo_vr.dto.response.AuthenticationResponse;
 import com.kadiraksoy.museo_vr.exception.EmailNotSendException;
 import com.kadiraksoy.museo_vr.exception.UserAlreadyExistException;
@@ -111,6 +112,21 @@ public class AuthServiceImpl implements AuthService {
         user.setOtpGeneratedTime(LocalDateTime.now());
         userService.save(user);
         return "Email sent... please verify account within 1 minute";
+    }
+
+    public String updateAuth(UpdateAuthRequest updateAuthRequest) {
+        User user = userService.getUserByEmail(updateAuthRequest.getEmail());
+        if(user == null){
+            throw new UserNotFoundException(updateAuthRequest.getEmail());
+        }
+        user.setName(updateAuthRequest.getName());
+        user.setLastName(updateAuthRequest.getLastName());
+        user.setEmail(updateAuthRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(updateAuthRequest.getPassword()));
+        user.setBirthDate(updateAuthRequest.getBirthDate());
+        user.setUpdatedAt(LocalDateTime.now());
+        userService.save(user);
+        return "User updated successfully";
     }
 
 
