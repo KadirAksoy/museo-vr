@@ -106,4 +106,10 @@ public class TravelController {
         TravelResponse travelResponse = travelService.updateImagesToTravel(travelId, imageId, image, content);
         return ResponseEntity.ok(travelResponse);
     }
+
+    @GetMapping("/my-travels")
+    public ResponseEntity<List<TravelResponse>> getMyTravels() {
+        List<TravelResponse> travels = travelService.getMyTravels();
+        return ResponseEntity.ok(travels);
+    }
 }

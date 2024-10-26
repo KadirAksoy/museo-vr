@@ -124,6 +124,18 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     @Transactional
+    public List<TravelResponse> getMyTravels() {
+        User user = getUserBySecurityContext();
+        List<Travel> travels = travelRepository.findByUserId(user.getId());
+        if (travels.isEmpty()) {
+            throw new TravelNotFoundException();
+        }
+        return travels.stream()
+                .map(travel -> createTravelResponse(travel, travel.getContentImage())).toList();
+    }
+
+    @Override
+    @Transactional
     public List<TravelResponse> getTravelsSortedByLikes() {
         List<Travel> travels = travelRepository.findTop10ByOrderByLikesDesc();
         return travels.stream()

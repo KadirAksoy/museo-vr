@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class TravelResponse {
 
     private Long id;
+    private Long userId;
     private String title;
     private String description;
     private LocalDateTime createdAt;

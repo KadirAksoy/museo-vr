@@ -46,7 +46,7 @@ public class LikeController {
     }
     @GetMapping("/travel/{travelId}")
     public ResponseEntity<List<LikeResponse>> getLikesUserIdForTravel(@PathVariable Long travelId) {
-        List<LikeResponse> likes = likeService.getLikesUserIdForTravel(travelId);
+        List<LikeResponse> likes = likeService.getLikesUserIdForTravel  (travelId);
         return ResponseEntity.ok(likes);
     }
 }

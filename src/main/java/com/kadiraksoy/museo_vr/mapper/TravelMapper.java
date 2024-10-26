@@ -32,6 +32,7 @@ public class TravelMapper {
         TravelResponse travelResponse = new TravelResponse();
         travelResponse.setId(travel.getId());
         travelResponse.setTitle(travel.getTitle());
+        travelResponse.setUserId(travel.getUser().getId());
         travelResponse.setDescription(travel.getDescription());
         travelResponse.setCreatedAt(travel.getCreatedAt());
         travelResponse.setUpdatedAt(travel.getUpdatedAt());

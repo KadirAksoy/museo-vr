@@ -21,5 +21,5 @@ public interface TravelService {
      void deleteTravel(Long id);
      void deleteTravelImagesFromTravel(Long travelId, Long imageId);
      TravelResponse updateImagesToTravel(Long travelId, Long imageId, MultipartFile image, TravelImageRequest content) throws IOException;
-
+     List<TravelResponse> getMyTravels();
 }
