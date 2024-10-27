@@ -20,8 +20,8 @@ public class LogServiceImpl implements LogService {
     }
 
 
-    public void logInfo(String message) {
-        Log log = new Log(message, LogLevel.INFO);
+    public void log(Log log) {
+        
         logRepository.save(log);
     }
 
