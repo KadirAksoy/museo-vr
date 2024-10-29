@@ -20,6 +20,8 @@ import com.kadiraksoy.museo_vr.service.UserService;
 import com.kadiraksoy.museo_vr.utils.AuthenticationUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.kadiraksoy.museo_vr.exception.TravelImageNotFoundException;
@@ -137,9 +139,11 @@ public class TravelServiceImpl implements TravelService {
     @Override
     @Transactional
     public List<TravelResponse> getTravelsSortedByLikes() {
-        List<Travel> travels = travelRepository.findTop10ByOrderByLikesDesc();
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Travel> travels = travelRepository.findTop10ByOrderByLikesDesc(pageable);
         return travels.stream()
-                .map(travel -> createTravelResponse(travel, travel.getContentImage())).toList();
+                .map(travel -> createTravelResponse(travel, travel.getContentImage()))
+                .toList();
     }
 
     @Override
