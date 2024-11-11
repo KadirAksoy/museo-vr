@@ -8,10 +8,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "error_responses")
+@Table(name = "error_logs")
 @Getter
 @Setter
-public class ErrorResponse {
+public class ErrorLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,11 @@ public class ErrorResponse {
     private String message;
     private LocalDateTime timestamp;
 
-    public ErrorResponse(String errorCode, String message) {
+    public ErrorLog(String errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
         this.timestamp = LocalDateTime.now();
     }
 
-    public ErrorResponse() {}
+    public ErrorLog() {}
 }

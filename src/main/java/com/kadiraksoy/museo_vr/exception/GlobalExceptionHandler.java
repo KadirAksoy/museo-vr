@@ -1,6 +1,6 @@
 package com.kadiraksoy.museo_vr.exception;
 
-import com.kadiraksoy.museo_vr.model.log.ErrorResponse;
+import com.kadiraksoy.museo_vr.model.log.ErrorLog;
 import com.kadiraksoy.museo_vr.service.impl.LogServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +17,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<ErrorResponse> handleBaseException(BaseException ex) {
-        ErrorResponse errorResponse = ex.getErrorResponse();
-        logServiceImpl.logError(errorResponse);
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorLog> handleBaseException(BaseException ex) {
+        ErrorLog errorLog = ex.getErrorResponse();
+        logServiceImpl.logError(errorLog);
+        return new ResponseEntity<>(errorLog, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
-        ErrorResponse errorResponse = new ErrorResponse("INTERNAL_SERVER_ERROR", ex.getMessage());
-        logServiceImpl.logError(errorResponse);
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ErrorLog> handleGenericException(Exception ex) {
+        ErrorLog errorLog = new ErrorLog("INTERNAL_SERVER_ERROR", ex.getMessage());
+        logServiceImpl.logError(errorLog);
+        return new ResponseEntity<>(errorLog, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

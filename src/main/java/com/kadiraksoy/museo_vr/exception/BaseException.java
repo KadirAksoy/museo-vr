@@ -1,18 +1,18 @@
 package com.kadiraksoy.museo_vr.exception;
 
 
-import com.kadiraksoy.museo_vr.model.log.ErrorResponse;
+import com.kadiraksoy.museo_vr.model.log.ErrorLog;
 
 public class BaseException extends RuntimeException{
 
-    private final ErrorResponse errorResponse;
+    private final ErrorLog errorLog;
 
-    public BaseException(ErrorResponse errorResponse) {
-        super(errorResponse.getMessage());
-        this.errorResponse = errorResponse;
+    public BaseException(ErrorLog errorLog) {
+        super(errorLog.getMessage());
+        this.errorLog = errorLog;
     }
 
-    public ErrorResponse getErrorResponse() {
-        return errorResponse;
+    public ErrorLog getErrorResponse() {
+        return errorLog;
     }
 }
